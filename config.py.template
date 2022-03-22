@@ -1,0 +1,21 @@
+source = {
+    'dmhy1':
+    {
+        'source': 'rss.xml',
+        'extract_function': 'dmhy_extract', # 提取下载链接的函数
+    }
+}
+
+
+aria2 = {
+    'aria2_1':
+    {
+        'host': "aria2_host",
+        'rpc_port': "6800",
+        'token': "aria2_token",
+        'download_dir': "/download/dir"
+    }
+}
+
+# 使用aria2_1配置下载dmhy1来源
+config = [('aria2_1', 'dmhy1')]

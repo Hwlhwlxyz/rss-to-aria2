@@ -2,6 +2,11 @@ import urllib.request
 import json
 import base64
 import time
+
+import ssl
+if hasattr(ssl, '_create_unverified_context'):
+    ssl._create_default_https_context = ssl._create_unverified_context
+    
 # https://manpages.ubuntu.com/manpages/jammy/en/man1/aria2c.1.html
 
 

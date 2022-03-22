@@ -46,6 +46,8 @@ def download_latest_by_feed(aria2_keyname, keyname):
     link_to_download = object_to_download['link']
     history_list = read_history(aria2_keyname, keyname)
     for d in history_list:
+        print(d)
+
         if (d["link"]==link_to_download):
             print("already downloaded")
             return
@@ -64,7 +66,7 @@ def read_history(aria2_keyname, keyname):
     with open(get_history_filename(aria2_keyname, keyname), 'r') as file:
         for l in file.readlines():
             j = json.loads(l)
-            history_list.append(l)
+            history_list.append(j)
     return history_list
 
 for c in config.config:

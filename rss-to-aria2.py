@@ -6,7 +6,7 @@ import util.aria2_util
 
 import json
 import feedparser
-
+import os
 
 print("test")
 
@@ -40,7 +40,7 @@ def download_latest_by_feed(aria2_keyname, keyname):
     one_config = config.source[keyname]
     print("===", one_config)
     d = feedparser.parse(one_config['source'])
-    print(d['feed']['title'])
+    print(d.feed.title)
     print(d.feed.published)
     object_to_download = extract_function(one_config['extract_function'], d.entries[0])
     link_to_download = object_to_download['link']
@@ -49,6 +49,7 @@ def download_latest_by_feed(aria2_keyname, keyname):
         if (d["link"]==link_to_download):
             print("already downloaded")
             return
+    aria2_response = None
     aria2_response = aria2_download(config.aria2[aria2_keyname], link_to_download)
     print(aria2_response)
     object_to_download['response'] = aria2_response
@@ -58,6 +59,8 @@ def download_latest_by_feed(aria2_keyname, keyname):
 
 def read_history(aria2_keyname, keyname):
     history_list = []
+    if not os.path.exists(get_history_filename(aria2_keyname, keyname)):
+        return []
     with open(get_history_filename(aria2_keyname, keyname), 'r') as file:
         for l in file.readlines():
             j = json.loads(l)
@@ -66,3 +69,4 @@ def read_history(aria2_keyname, keyname):
 
 for c in config.config:
     print(c)
+    download_latest_by_feed(c[0], c[1])

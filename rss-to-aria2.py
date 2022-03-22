@@ -62,6 +62,8 @@ def download_latest_by_feed(aria2_keyname, keyname):
 def read_history(aria2_keyname, keyname):
     history_list = []
     if not os.path.exists(get_history_filename(aria2_keyname, keyname)):
+        if not os.path.exists('history'):
+            os.makedirs('history')
         return []
     with open(get_history_filename(aria2_keyname, keyname), 'r') as file:
         for l in file.readlines():
